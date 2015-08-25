@@ -22,6 +22,7 @@
 # Error codes
 #   - 255: generic error
 #   - 254: incorrect parameters
+#   - 253: no logfile
 
 function error {
   >&2 echo "$(basename $0): $1"
@@ -37,34 +38,38 @@ fi
 LOGFILE=$1
 PREFIX=$2
 
-# if egg folder is remove
-rm_egg=true
-while read line; do
-  # remove binaries in bin folder
-  if [[ $line == $PREFIX/bin/* ]]; then
-    rm -rf $line
-    #rm -rf $line
-  # remove egg folder in lib
-  elif [[ $line == $PREFIX/lib/* ]] && [[ $rm_egg = true ]]; then
-    # $line without $PREFIX
-    temp=${line#$PREFIX}
-    
-    # variable to save path
-    egg_path=""
-    
-    # loop $temp and extract path until egg folder
-    IFS='/' read -ra CHUNKS <<< $temp
-    for i in ${CHUNKS[*]}; do
-      # loop for every folder in path
-      if [[ $i == V4LCapture* ]]; then
-        rm -rf "$PREFIX/$egg_path$i"
-        # set block not evaluate next line
-        rm_egg=false
-        break
-      else
-        # add string to egg_path until egg folder
-        egg_path+="$i/"
-      fi
-    done
-  fi
-done < $LOGFILE
+if [ -r $LOGFILE ]; then
+  # if egg folder is remove
+  rm_egg=true
+  while read line; do
+    # remove binaries in bin folder
+    if [[ $line == $PREFIX/bin/* ]]; then
+      rm -rf $line
+      #rm -rf $line
+    # remove egg folder in lib
+    elif [[ $line == $PREFIX/lib/* ]] && [[ $rm_egg = true ]]; then
+      # $line without $PREFIX
+      temp=${line#$PREFIX}
+      
+      # variable to save path
+      egg_path=""
+      
+      # loop $temp and extract path until egg folder
+      IFS='/' read -ra CHUNKS <<< $temp
+      for i in ${CHUNKS[*]}; do
+        # loop for every folder in path
+        if [[ $i == V4LCapture* ]]; then
+          rm -rf "$PREFIX/$egg_path$i"
+          # set block not evaluate next line
+          rm_egg=false
+          break
+        else
+          # add string to egg_path until egg folder
+          egg_path+="$i/"
+        fi
+      done
+    fi
+  done < $LOGFILE
+else
+  error "$LOGFILE not found" 253
+fi
