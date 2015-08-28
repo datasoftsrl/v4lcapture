@@ -67,7 +67,7 @@ class Window(QMainWindow):
     self.app = QApplication(argv)
     super(Window, self).__init__()
     
-    ## title and icon
+    ## title, icon and default size and position
     self.setWindowTitle('V4LCapture')
     iconpath = pkg.resource_filename('v4lcapture', 'v4lcapture.png')
     if path.isfile(iconpath):
@@ -85,8 +85,6 @@ class Window(QMainWindow):
     self.thread.ready.connect(self._preferences)
     # visualize
     self.show()
-    # resize based on size and fixed window
-    self.setFixedSize(self.sizeHint())
   
   def _createUI(self):
     '''
@@ -318,6 +316,7 @@ class Window(QMainWindow):
     (width, height) = self.v4l.getFormat()
     if data is not None:
       self.preview.setPixmap(data, width, height)
+      self.setFixedSize(self.sizeHint())
   
   def capture(self):
     '''
@@ -343,7 +342,7 @@ class Window(QMainWindow):
     Closes other windows open.
     Writes config.
     
-    < event: in this case the closing event
+    < event: closing event
     '''
     self.thread.quit()
     self.thread.wait()
@@ -359,6 +358,24 @@ class Window(QMainWindow):
     # close core log
     self.v4l.closeLog()
     error.log('core log closed')
+  
+  old_w = 0
+  old_h = 0
+  def resizeEvent(self, event):
+    '''
+    If current size is different from previous frame size, resize, else do nothing.
+    old_w and old_h are defined outside to simulate C static keyword use.
+    
+    < event: resizing event
+    '''
+    size = self.sizeHint()
+    w = size.width()
+    h = size.height()
+    if w != self.old_w or h != self.old_h:
+      print(w, h)
+      super().resizeEvent(event)
+      self.old_w = w
+      self.old_h = h
   
   def quit(self):
     '''
