@@ -150,9 +150,18 @@ class Window(QMainWindow):
     ## about
     about_menu = self.menubar.addMenu('&About')
     
+    wiki_act = QAction(QIcon.fromTheme('help-browser'),
+        'Go to wiki...', self)
+    wiki_act.triggered.connect(
+      lambda:
+        QDesktopServices.openUrl(QUrl('https://github.com/datasoftsrl/'
+            'v4lcapture/wiki', QUrl.TolerantMode))
+    )
+    about_menu.addAction(wiki_act)
+    
     sep_act3 = QAction(self)
     sep_act3.setSeparator(True)
-    file_menu.addAction(sep_act3)
+    about_menu.addAction(sep_act3)
     
     ds_act = QAction(QIcon.fromTheme('applications-internet'),
         'DataSoft Srl', self)
