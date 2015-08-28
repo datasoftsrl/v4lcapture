@@ -126,7 +126,7 @@ install:
 
     mf.write('\t@python3 setup.py install --prefix=$(PREFIX)')
     mf.write(' --record {}'.format(install_log))
-    mf.write(' >/dev/null\n')
+    mf.write(' >/dev/null 2>&1\n')
     
     # check icons folder
     if not path.isdir('icons'):
@@ -142,7 +142,8 @@ install:
     # copy .desktop file into system folder
     mf.write('\t@mkdir -p $(PREFIX)/share/applications\n')
     mf.write('\t@desktop-file-install --dir=$(PREFIX)/share/applications/ \\\n'
-        '    --rebuild-mime-info-cache $(SCRIPTS)/v4lcapture.desktop\n')
+        '    --rebuild-mime-info-cache $(SCRIPTS)/v4lcapture.desktop'
+        ' >/dev/null 2>&1\n')
     mf.write('\t@update-desktop-database\n')
 
     mf.write('\n')

@@ -14,21 +14,21 @@ by means of ioctl calls.
 Requirements
 ============
 
-- ``python`` >= 3.4
+- ``python`` >= ``3.3``
   
-  - ``setuptools`` >= 3.3
-  - ``pyqt5`` >= 5.2.1
+  - ``setuptools`` >= ``3.3``
+  - ``pyqt5`` >= ``5.2``
 
-- ``ffmpeg`` >= N-72627-gb8c0cf7 (2.7)
+- ``ffmpeg`` >= ``2.5.8``
   
-  - ``libavutil`` >= 54.26.101
-  - ``libavcodec`` >= 56.41.101
-  - ``libavformat`` >= 56.34.100
-  - ``libswscale`` >= 3.1.101
+  - ``libavutil`` >= ``54.15.100``
+  - ``libavcodec`` >= ``56.13.100``
+  - ``libavformat`` >= ``56.15.102``
+  - ``libswscale`` >= ``3.1.101``
 
-- ``libpolkit`` >= 0.105
+- ``libpolkit`` >= ``0.105``
   
-  - ``pkexec`` >= 0.105
+  - ``pkexec`` >= ``0.105``
 
 Installation
 ============
