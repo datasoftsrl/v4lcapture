@@ -381,7 +381,6 @@ class Window(QMainWindow):
     w = size.width()
     h = size.height()
     if w != self.old_w or h != self.old_h:
-      print(w, h)
       super().resizeEvent(event)
       self.old_w = w
       self.old_h = h
