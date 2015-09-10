@@ -624,14 +624,14 @@ class StreamTab(Tab):
     mux_l = QLabel('Container', self)
     self.layout.addWidget(mux_l, 6, 0, 1, 7, Qt.AlignCenter)
     self.mux_cb = QComboBox(self)
-    self.mux_cb.setEnabled(False)
+    #self.mux_cb.setEnabled(False)
     self.mux_cb.addItems((
       'mpegts',
-      'matroska',
-      'ogg',
-      'mp4',
+      #'matroska',
+      #'ogg',
+      #'mp4',
       'avi',
-      'nut',
+      #'nut',
     ))
     self.layout.addWidget(self.mux_cb, 7, 0, 1, 7, Qt.AlignCenter)
     

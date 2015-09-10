@@ -1,5 +1,9 @@
 # V4LCapture
 
+## 1.0.3
+Unblocked option to choose `avi` streaming format in streaming tab of
+preferences window..
+
 ## 1.0.2
 Added link to Github wiki in About menu.
 
