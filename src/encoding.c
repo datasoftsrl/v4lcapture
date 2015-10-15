@@ -36,7 +36,7 @@
 #include "libavutil/imgutils.h"
 
 #include "struct.h"
-#include "h264.h"
+#include "encoding.h"
 #include "error.h"
 #include "util.h"
 
@@ -102,7 +102,7 @@ conv_ctx *conv_ctx_init(ctx *cntx) {
   strcpy(conv_context->filename, "udp://239.0.0.3:12345");
   
   conv_context->format = malloc(21);
-  strcpy(conv_context->format, "mpegts");
+  strcpy(conv_context->format, "avi");
   
   conv_context->crf = 28;
   /* retrieve framerate based on input */
@@ -311,7 +311,7 @@ void mux_encoder_init(ctx *cntx, conv_ctx *c_cntx) {
     gen_critical("could not open \"%s\"\n", c_cntx->filename);
   }
   
-  /* write mpegts header */
+  /* write muxer header */
   temp = avformat_write_header(c_cntx->fmt_ctx, NULL);
   if (-1 == temp) {
     gen_critical("could not write header to \"%s\"\n", c_cntx->filename);
@@ -338,8 +338,6 @@ void mux_encoder_init(ctx *cntx, conv_ctx *c_cntx) {
   
   /* allocate and init packet */
   av_init_packet(c_cntx->packet);
-  /* free unused packet data */
-  //av_freep(&(c_cntx->packet->data));
   
   c_cntx->packet->size = 0;
   c_cntx->packet->data = NULL;
@@ -407,7 +405,7 @@ void write_cached(ctx *cntx, conv_ctx *c_cntx) {
     }
   }
   
-  /* write mpegts trailer */
+  /* write muxer trailer */
   av_write_trailer(c_cntx->fmt_ctx);
   
   /* close output file */

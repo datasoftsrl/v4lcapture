@@ -29,7 +29,7 @@
 #include "capture.h"
 #include "struct.h"
 #include "error.h"
-#include "h264.h"
+#include "encoding.h"
 #include "util.h"
 
 int main(void) {

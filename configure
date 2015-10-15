@@ -79,7 +79,7 @@ CFLAGS := -g -Wall -fPIC
 LIBS := -lswscale -lavcodec -lavutil -lavformat
 INC := -Iinclude
 
-FILES := capture error h264 util
+FILES := capture error encoding util
 
 LIB = lib
 BIN := bin

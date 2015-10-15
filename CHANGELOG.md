@@ -17,3 +17,6 @@ Initial version of software.
 
 ## 1.0.0
 Initial version of software.
+
+## 1.0.1
+Changed default muxing format to "avi"
